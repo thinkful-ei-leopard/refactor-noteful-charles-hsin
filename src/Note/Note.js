@@ -6,6 +6,27 @@ import './Note.css'
 import NotefulContext from '../NotefulContext'
 
 export default function Note(props) {
+
+  fetch(`http://localhost:3000/note/${props.id}`, {
+  method: 'DELETE',
+  headers: {
+    'content-type': 'application/json'
+  }
+
+}) 
+.then(res =>{
+if(res.ok){
+    return res.json();
+  }else{
+    throw new Error (res.statusText)
+  }
+})
+.then( result => {
+   props.setState({
+     notes: result
+   })
+})
+.catch(error => console.log(error.message))
   
   console.log(props.handleDelete);
   return (
